@@ -4,45 +4,48 @@
   <meta charset="UTF-8">
   <style>
     body {
-      width: 280px;
+      width: 300px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       padding: 14px;
       margin: 0;
       color: #333;
     }
-    h3 {
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-size: 15px;
-      text-align: center;
-    }
+    h3 { margin-top: 0; margin-bottom: 12px; font-size: 15px; text-align: center; }
     .config-card {
       background-color: #f8f9fa;
       border: 1px solid #e9ecef;
       border-radius: 6px;
       padding: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .form-group {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
-      font-size: 13px;
+      font-size: 12px;
     }
-    .form-group:last-child {
-      margin-bottom: 0;
-    }
-    .form-group label {
-      color: #495057;
-    }
-    .form-group input {
-      width: 60px;
-      padding: 4px 6px;
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label { color: #495057; }
+    .form-group input[type="number"] {
+      width: 55px;
+      padding: 3px 5px;
       border: 1px solid #ced4da;
       border-radius: 4px;
-      font-size: 13px;
       text-align: center;
+    }
+    .form-group input[type="text"] {
+      width: 120px;
+      padding: 3px 5px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      margin-bottom: 8px;
     }
     .info-panel {
       font-size: 12px;
@@ -54,11 +57,7 @@
       margin-bottom: 12px;
       line-height: 1.4;
     }
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .btn-group { display: flex; flex-direction: column; gap: 8px; }
     button {
       padding: 8px 12px;
       border: 1px solid #007bff;
@@ -70,34 +69,17 @@
       font-weight: 500;
       transition: background-color 0.2s;
     }
-    button:hover {
-      background-color: #0056b3;
-    }
-    button:disabled {
-      background-color: #adb5bd;
-      border-color: #adb5bd;
-      cursor: not-allowed;
-    }
-    button.secondary {
-      background-color: #6c757d;
-      border-color: #6c757d;
-    }
-    button.secondary:hover {
-      background-color: #5a6268;
-    }
-    .status {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #666;
-      text-align: center;
-      min-height: 16px;
-    }
+    button:hover { background-color: #0056b3; }
+    button:disabled { background-color: #adb5bd; border-color: #adb5bd; cursor: not-allowed; }
+    button.secondary { background-color: #6c757d; border-color: #6c757d; }
+    button.secondary:hover { background-color: #5a6268; }
+    .status { margin-top: 10px; font-size: 12px; color: #d9534f; text-align: center; min-height: 16px; }
   </style>
 </head>
 <body>
   <h3>Table Extractor Pro</h3>
 
-  <!-- 过滤条件设置面板 -->
+  <!-- 过滤条件 -->
   <div class="config-card">
     <div class="form-group">
       <label for="startRow">起始行 (N):</label>
@@ -109,10 +91,29 @@
     </div>
   </div>
 
-  <!-- 表格统计指示面板 -->
-  <div class="info-panel" id="infoPanel">
-    正在检测页面表格...
+  <!-- 分页配置 -->
+  <div class="config-card">
+    <div class="checkbox-group">
+      <input type="checkbox" id="enablePagination">
+      <label for="enablePagination"><b>启用自动翻页抓取</b></label>
+    </div>
+    <div id="paginationSettings" style="display: none;">
+      <div class="form-group">
+        <label for="nextBtnSelector">下一页按钮 (CSS 选择器):</label>
+        <input type="text" id="nextBtnSelector" placeholder=".next, a:contains('下一页')" value=".pagination-next, .next, [aria-label='Next']">
+      </div>
+      <div class="form-group">
+        <label for="maxPages">最大翻页数:</label>
+        <input type="number" id="maxPages" value="10" min="1">
+      </div>
+      <div class="form-group">
+        <label for="pageDelay">翻页延迟 (秒):</label>
+        <input type="number" id="pageDelay" value="2" min="1">
+      </div>
+    </div>
   </div>
+
+  <div class="info-panel" id="infoPanel">正在检测页面表格...</div>
 
   <div class="btn-group">
     <button id="exportExcel">导出符合条件的表格 (Excel)</button>

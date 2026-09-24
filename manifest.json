@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "网页表格提取与过滤导出工具",
-  "version": "1.1",
-  "description": "按条件过滤提取网页表格，并导出为 Excel 或 JSON。",
+  "name": "网页表格提取与自动分页导出",
+  "version": "1.2",
+  "description": "支持按条件过滤并自动翻页抓取网页表格，导出为 Excel 或 JSON。",
   "permissions": [
     "activeTab",
     "scripting"
